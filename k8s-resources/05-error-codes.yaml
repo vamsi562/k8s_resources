@@ -11,3 +11,5 @@ spec:
   containers:
     - name: nginx
       image: nginxssdfcdefy
+    - name: almalinux
+      image: almalinux:9
