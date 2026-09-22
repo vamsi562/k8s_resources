@@ -1,5 +1,7 @@
 # Commands
-
+``` 
+ kubectl api-resources
+```
 ## Namespace
 ``` 
  kubectl get namespaces
