@@ -12,3 +12,9 @@
 ``` 
  kubectl delete namespace <namespace-name>
 ```
+```
+kubectl apply -f 01-Namespace.yaml
+```
+```
+kubectl delete -f 01-Namespace.yaml
+```
