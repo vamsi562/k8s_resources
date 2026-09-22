@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: resources-test
+  namespace: roboshop
+  labels:
+    project: roboshop
+    environment: dev
+    component: resources
+spec:
+  containers:
+    - name: nginx
+      image: nginx
+      resources:
+        requests:
+          memory: "68 Mi"
+          cpu: "100M"
+        limits:
+          memory: "100 Mi"
+          cpu: "120M"
