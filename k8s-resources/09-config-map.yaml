@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: pod-config
   namespace: roboshop
-  data:
-    project: roboshop
-    environment: dev
-    component: env
+data:
+  project: roboshop
+  environment: dev
+  component: env
