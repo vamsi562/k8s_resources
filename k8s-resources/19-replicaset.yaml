@@ -7,12 +7,14 @@ metadata:
     environment: dev
   namespace: roboshop
 spec:
-  replicas: 3
+  # Specify replicas to be created
+  replicas: 5
   selector:
     matchLabels:
       purpose: roboshop
       environment: dev
   template:
+    # pod definition
     metadata:
       labels:
         purpose: roboshop
