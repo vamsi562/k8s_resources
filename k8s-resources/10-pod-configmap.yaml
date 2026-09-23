@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: env-test
+  name: pod-config-map
   namespace: roboshop
   labels:
     project: roboshop
