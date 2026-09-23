@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sample-deployment
+  labels:
+    purpose: roboshop
+    environment: dev
+  namespace: roboshop
+spec:
+  # Specify replicas to be created
+  replicas: 5
+  selector:
+    matchLabels:
+      purpose: roboshop
+      environment: dev
+  template:
+    # pod definition
+    metadata:
+      labels:
+        purpose: roboshop
+        environment: dev
+    spec:
+      containers:
+        - name: nginx
+          image: nginx
