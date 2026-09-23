@@ -11,6 +11,6 @@ spec:
   containers:
     - name: nginx
       image: nginx
-      envfrom:
+      envFrom:
         - configMapRef:
             name: pod-config
