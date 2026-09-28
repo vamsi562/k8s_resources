@@ -5,3 +5,35 @@ metadata:
 provisioner: ebs.csi.aws.com
 reclaimPolicy: Retain
 volumeBindingMode: WaitForFirstConsumer
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ebs-dynamic-claim
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: ebs-dynamic-test
+  resources:
+    requests:
+      storage: 4Gi
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-ebs-dynamic
+spec:
+  containers:
+    - name: nginx
+      image: nginx
+      volumeMounts:
+        - name: nginx-storage
+          mountPath: /usr/share/nginx/html
+  volumes:
+    - name: nginx-storage
+      persistentVolumeClaim:
+        claimName: ebs-dynamic-claim
+  # nodeSelector:
+  #   topology.kubernetes.io/zone: "us-east-1a"

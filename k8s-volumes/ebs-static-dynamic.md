@@ -31,3 +31,10 @@
   kubectl get pvc
   kubectl get node --show-labels
 ```
+
+# Steps to ebs dynamic driver
+- we need to create a storage class which inturn creates a disk and PV
+- create a pvc
+- attach pvc to pod
+
+**for static we need to specify node selector, where as for dynamic volume gets created in node where pod created**
