@@ -29,3 +29,14 @@ tar -xzf eksctl_$PLATFORM.tar.gz -C /tmp && rm -f eksctl_$PLATFORM.tar.gz
 # 4. Install the binary into your PATH
 sudo install -m 0755 /tmp/eksctl /usr/local/bin && rm -f /tmp/eksctl
 eksctl version
+
+###kubectx and kubens setup
+git clone https://github.com/ahmetb/kubectx.git ~/.kubectx
+COMPDIR=$(pkg-config --variable=completionsdir bash-completion)
+ln -sf ~/.kubectx/completion/kubens.bash $COMPDIR/kubens
+ln -sf ~/.kubectx/completion/kubectx.bash $COMPDIR/kubctx
+cat << EOF >> ~/.bashrc
+#kubectx and kubens
+export PATH=~/.kubectx:\$PATH
+EOF
+````
