@@ -24,3 +24,10 @@
 - PVC claim:
    - provide  pv name in yaml
    - also keep storage class as empty
+
+# commands
+ ```
+  kubectl get pv
+  kubectl get pvc
+  kubectl get node --show-labels
+```
