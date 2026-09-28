@@ -6,6 +6,8 @@ provisioner: efs.csi.aws.com
 parameters:
   provisioningMode: efs-ap
   fileSystemId: fs-00af77c5d2f1fc37f
+  directoryPerms: "700"
+  basePath: "/roboshop"
 
 ---
 apiVersion: v1
