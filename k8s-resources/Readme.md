@@ -65,3 +65,9 @@ kubectl describe secret <secretname>
 kubectl get secret <secretname> -o jsonpath='{.data}'
 kubectl get secret <secretname> -o jsonpath='{.data.<name>}' | base64 --decode
 ```
+
+## Kubens
+```
+kubens
+kubens <namespacename>
+```
