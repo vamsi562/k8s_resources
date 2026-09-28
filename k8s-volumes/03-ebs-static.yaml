@@ -43,3 +43,5 @@ spec:
     - name: nginx-storage
       persistentVolumeClaim:
         claimName: test-ebs-static-pvc
+  nodeSelector:
+    topology.kubernetes.io/zone: "us-east-1a"
