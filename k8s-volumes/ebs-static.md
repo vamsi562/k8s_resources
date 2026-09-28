@@ -21,3 +21,6 @@
    - Recycle -> If pod deleted, delete data inside volume and keep disk
    - Retain -> Dont delete data
   ```
+- PVC claim:
+   - provide  pv name in yaml
+   - also keep storage class as empty
