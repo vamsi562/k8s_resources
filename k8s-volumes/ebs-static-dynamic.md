@@ -37,4 +37,4 @@
 - create a pvc
 - attach pvc to pod
 
-**for static we need to specify node selector, where as for dynamic volume gets created in node where pod created**
+**for static we need to specify node selector where as for dynamic, volume gets created in node where pod created**
