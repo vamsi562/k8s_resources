@@ -25,29 +25,31 @@ spec:
           image: nginx:alpine
 ---
 apiVersion: v1
-kind: Pod
+kind: Service
 metadata:
-  name: nginx
+  name: service-test
   namespace: roboshop
-  labels:
-    project: headless
-    environment: dev
 spec:
-  containers:
-    - name: nginx
-      image: nginx
+  selector:
+    purpose: headless
+    environment: dev
+  ports:
+    - protocol: TCP
+      port: 80 #servicePort
+      targetPort: 80 #containerPort
 
 ---
 apiVersion: v1
-kind: Pod
+kind: Service
 metadata:
-  name: nginx-headless
+  name: service-headless
   namespace: roboshop
-  labels:
-    project: headless
-    environment: dev
 spec:
   clusterIP: None
-  containers:
-    - name: nginx
-      image: nginx
+  selector:
+    purpose: headless
+    environment: dev
+  ports:
+    - protocol: TCP
+      port: 80 #servicePort
+      targetPort: 80 #containerPort
