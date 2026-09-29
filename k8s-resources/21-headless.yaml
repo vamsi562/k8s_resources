@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sample-headless
+  labels:
+    purpose: headless
+    environment: dev
+  namespace: roboshop
+spec:
+  # Specify replicas to be created
+  replicas: 5
+  selector:
+    matchLabels:
+      purpose: headless
+      environment: dev
+  template:
+    # pod definition
+    metadata:
+      labels:
+        purpose: headless
+        environment: dev
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:alpine
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+  namespace: roboshop
+  labels:
+    project: headless
+    environment: dev
+spec:
+  containers:
+    - name: nginx
+      image: nginx
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-headless
+  namespace: roboshop
+  labels:
+    project: headless
+    environment: dev
+spec:
+  ClusterIP: None
+  containers:
+    - name: nginx
+      image: nginx
