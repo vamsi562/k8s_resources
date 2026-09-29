@@ -53,10 +53,9 @@ replicas: 3 # by default is 1
 template:
   metadata:
     labels:
-      app: nginx # has to match .spec.selector.matchLabels
+      app: nginx
       purpose: stateful
   spec:
-    terminationGracePeriodSeconds: 10
     containers:
       - name: nginx
         image: nginx
