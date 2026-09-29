@@ -1,29 +1,77 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: stateful-test
-  namespace: roboshop
+  name: nginx-headless
+  labels:
+    app: nginx
+    purpose: stateful
 spec:
-  selector:
-    purpose: headless
-    environment: dev
   ports:
-    - protocol: TCP
-      port: 80 #servicePort
-      targetPort: 80 #containerPort
-
+    - port: 80
+      name: web
+  clusterIP: None
+  selector:
+    app: nginx
+    purpose: stateful
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: stateful-test
-  namespace: roboshop
+  name: nginx
+  labels:
+    app: nginx
+    purpose: stateful
 spec:
-  clusterIP: None
-  selector:
-    purpose: headless
-    environment: dev
   ports:
-    - protocol: TCP
-      port: 80 #servicePort
-      targetPort: 80 #containerPort
+    - port: 80
+      name: web
+  selector:
+    app: nginx
+    purpose: stateful
+--- # Storage class and persistent volume claim are manadatory for stateful set
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: ebs-dynamic-test
+provisioner: ebs.csi.aws.com
+reclaimPolicy: Retain
+volumeBindingMode: WaitForFirstConsumer
+
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: nginx
+spec:
+  selector:
+    matchLabels:
+      app: nginx
+      purpose: stateful
+--- # has to match .spec.template.metadata.labels
+serviceName: "nginx-headless" # headless service name has to match the serviceName in stateful set
+replicas: 3 # by default is 1
+template:
+  metadata:
+    labels:
+      app: nginx # has to match .spec.selector.matchLabels
+      purpose: stateful
+  spec:
+    terminationGracePeriodSeconds: 10
+    containers:
+      - name: nginx
+        image: nginx
+        ports:
+          - containerPort: 80
+            name: web
+        volumeMounts:
+          - name: ebs-dynamic-claim
+            mountPath: /usr/share/nginx/html
+volumeClaimTemplates:
+  - metadata:
+      name: ebs-dynamic-claim
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      storageClassName: "ebs-dynamic-test"
+      resources:
+        requests:
+          storage: 1Gi
