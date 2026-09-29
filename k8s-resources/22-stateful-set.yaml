@@ -46,31 +46,30 @@ spec:
   selector:
     matchLabels:
       app: nginx
-      purpose: stateful
---- # has to match .spec.template.metadata.labels
-serviceName: "nginx-headless" # headless service name has to match the serviceName in stateful set
-replicas: 3 # by default is 1
-template:
-  metadata:
-    labels:
-      app: nginx
-      purpose: stateful
-  spec:
-    containers:
-      - name: nginx
-        image: nginx
-        ports:
-          - containerPort: 80
-            name: web
-        volumeMounts:
-          - name: ebs-dynamic-claim
-            mountPath: /usr/share/nginx/html
-volumeClaimTemplates:
-  - metadata:
-      name: ebs-dynamic-claim
+      purpose: stateful # has to match .spec.template.metadata.labels
+  serviceName: "nginx-headless" # headless service name has to match the serviceName in stateful set
+  replicas: 3 # by default is 1
+  template:
+    metadata:
+      labels:
+        app: nginx
+        purpose: stateful
     spec:
-      accessModes: ["ReadWriteOnce"]
-      storageClassName: "ebs-dynamic-test"
-      resources:
-        requests:
-          storage: 1Gi
+      containers:
+        - name: nginx
+          image: nginx
+          ports:
+            - containerPort: 80
+              name: web
+          volumeMounts:
+            - name: ebs-dynamic-claim
+              mountPath: /usr/share/nginx/html
+  volumeClaimTemplates:
+    - metadata:
+        name: ebs-dynamic-claim
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        storageClassName: "ebs-dynamic-test"
+        resources:
+          requests:
+            storage: 1Gi
