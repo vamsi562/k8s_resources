@@ -8,7 +8,7 @@ metadata:
   namespace: roboshop
 spec:
   # Specify replicas to be created
-  replicas: 5
+  replicas: 3
   selector:
     matchLabels:
       purpose: headless
@@ -47,7 +47,7 @@ metadata:
     project: headless
     environment: dev
 spec:
-  ClusterIP: None
+  clusterIP: None
   containers:
     - name: nginx
       image: nginx
