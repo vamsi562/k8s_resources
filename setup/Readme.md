@@ -35,3 +35,8 @@ COMPDIR=$(pkg-config --variable=completionsdir bash-completion 2>/dev/null || ec
 ln -s /opt/kubectx/completion/kubectx.bash "$COMPDIR/kubectx"
 ln -s /opt/kubectx/completion/kubens.bash "$COMPDIR/kubens"
 ```
+
+# k9s
+```
+curl -sS https://webinstall.dev/k9s | bash
+```

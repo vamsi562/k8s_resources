@@ -31,12 +31,16 @@ sudo install -m 0755 /tmp/eksctl /usr/local/bin && rm -f /tmp/eksctl
 eksctl version
 
 ###kubectx and kubens setup
-git clone https://github.com/ahmetb/kubectx.git ~/.kubectx
-COMPDIR=$(pkg-config --variable=completionsdir bash-completion)
-ln -sf ~/.kubectx/completion/kubens.bash $COMPDIR/kubens
-ln -sf ~/.kubectx/completion/kubectx.bash $COMPDIR/kubctx
-cat << EOF >> ~/.bashrc
-#kubectx and kubens
-export PATH=~/.kubectx:\$PATH
-EOF
-````
+sudo git clone https://github.com/ahmetb/kubectx /opt/kubectx
+sudo ln -s /opt/kubectx/kubens /usr/local/bin/kubens
+# git clone https://github.com/ahmetb/kubectx.git ~/.kubectx
+# COMPDIR=$(pkg-config --variable=completionsdir bash-completion)
+# sudo ln -sf ~/.kubectx/completion/kubens.bash $COMPDIR/kubens
+# ln -sf ~/.kubectx/completion/kubectx.bash $COMPDIR/kubctx
+# cat << EOF >> ~/.bashrc
+# #kubectx and kubens
+# export PATH=~/.kubectx:\$PATH
+# EOF
+
+## k9s
+curl -sS https://webinstall.dev/k9s | bash
