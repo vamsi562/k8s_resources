@@ -30,6 +30,9 @@ tar -xzf eksctl_$PLATFORM.tar.gz -C /tmp && rm -f eksctl_$PLATFORM.tar.gz
 sudo install -m 0755 /tmp/eksctl /usr/local/bin && rm -f /tmp/eksctl
 eksctl version
 
+## k9s
+curl -sS https://webinstall.dev/k9s | bash
+
 ###kubectx and kubens setup
 sudo git clone https://github.com/ahmetb/kubectx /opt/kubectx
 sudo ln -s /opt/kubectx/kubens /usr/local/bin/kubens
@@ -41,6 +44,3 @@ sudo ln -s /opt/kubectx/kubens /usr/local/bin/kubens
 # #kubectx and kubens
 # export PATH=~/.kubectx:\$PATH
 # EOF
-
-## k9s
-curl -sS https://webinstall.dev/k9s | bash
