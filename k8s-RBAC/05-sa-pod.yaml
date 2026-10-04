@@ -11,3 +11,4 @@ spec:
       command: ["sleep", "10000"]
 
 # login to pod and access the secret using the service account
+# aws secretsmanager get-secret-value --secret-id dev/roboshop/mysqlpassword --query SecretString --output text
