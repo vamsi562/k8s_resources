@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-preffered
+  # namespace: roboshop
+spec:
+  # Specify replicas to be created
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: alpha.eksctl.io/cluster-name
+                operator: In
+                values:
+                  - roboshop-dev
+              # - key: app
+              #   operator: In
+              #   values:
+              #     - affinity
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 10
+          preference:
+            matchExpressions:
+              - key: app
+                operator: In
+                values:
+                  - affinity
+        - weight: 100
+          preference:
+            matchExpressions:
+              - key: app
+                operator: In
+                values:
+                  - preferred
+  containers:
+    - name: nginx
+      image: nginx:alpine

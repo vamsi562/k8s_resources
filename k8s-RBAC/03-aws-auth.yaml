@@ -1,0 +1,24 @@
+# apiVersion: v1
+# kind: ConfigMap
+# metadata:
+#   name: aws-auth
+#   namespace: kube-system
+# data:
+#   mapRoles: |
+#     # Worker node IAM role mapping (Required for nodes to join cluster)
+#     - rolearn: arn:aws:iam::123456789012:role/eks-node-role
+#       username: system:node:{{EC2PrivateDNSName}}
+#       groups:
+#         - system:bootstrappers
+#         - system:nodes
+#     # IAM Role mapping (e.g., AWS IAM Identity Center/SSO role)
+#     - rolearn: arn:aws:iam::123456789012:role/developer-role
+#       username: developer-user
+#       groups:
+#         - system:masters
+#   mapUsers: |
+#     # IAM User mapping
+#     - userarn: arn:aws:iam::123456789012:user/admin-user
+#       username: admin-user
+#       groups:
+#         - system:masters

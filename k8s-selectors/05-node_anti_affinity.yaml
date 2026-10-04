@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-anti-affinity
+  # namespace: roboshop
+spec:
+  # Specify replicas to be created
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: app
+                operator: NotIn
+                values:
+                  - affinity
+  containers:
+    - name: nginx
+      image: nginx:alpine

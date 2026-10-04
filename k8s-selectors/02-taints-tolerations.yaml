@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sample-tolerate
+  labels:
+    purpose: tolerate
+    environment: dev
+  namespace: roboshop
+spec:
+  # Specify replicas to be created
+  replicas: 2
+  selector:
+    matchLabels:
+      purpose: tolerate
+      environment: dev
+  template:
+    # pod definition
+    metadata:
+      labels:
+        purpose: tolerate
+        environment: dev
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: ip-192-168-30-177.ec2.internal
+      containers:
+        - name: nginx
+          image: nginx:alpine
+      tolerations:
+        - key: "purpose"
+          operator: "Equal"
+          value: "tainted"
+          effect: "NoSchedule"
