@@ -23,10 +23,22 @@ Steps:
    - once above user login with aws access key and secret key in his device
     run below command
     ```
-      aws eks update-config --region us-east-1 --name roboshop-dev
+      aws eks update-kubeconfig --region us-east-1 --name roboshop-dev
     ```
 aws-auth - check for authentication
 role & role binding - provide authorisation access to cluster
 
+Similarly we will have for cluster role and role binding
 
+## Service Accounts
+We need to integrate OIDC provider
 
+```
+    eksctl utils associate-iam-oidc-provider --cluster roboshop-dev --approve
+```
+Create a policy in aws
+attach that policy arn in below command
+```
+    eksctl create iamservice account --cluster roboshop-dev --name secret-reader --namespace roboshop --attach-policy-arn arn:aws:iam::055610219795:policy/RoboshopMySQLSecretReader  --approve
+```
+We can create with above command or with yaml as well
