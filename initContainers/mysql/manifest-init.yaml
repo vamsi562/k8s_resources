@@ -34,7 +34,7 @@ spec:
         component: mysql
         tier: db
     spec:
-      serviceAccount: secret-mysql-reader
+      serviceAccountName: secret-mysql-reader
       initContainers:
         - name: fetch-secret
           image: amazon/aws-cli
