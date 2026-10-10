@@ -50,9 +50,6 @@ spec:
         - name: mysql
           image: vamsi562/mysql:v2
           imagePullPolicy: Always
-          env:
-            - name: MYSQL_ROOT_PASSWORD_FILE
-              value: /tmp/mysql-root-password.txt
           volumeMounts:
             - name: mysql-config
               mountPath: /etc/mysql/conf.d/my.cnf
