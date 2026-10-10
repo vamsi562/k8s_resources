@@ -5,7 +5,7 @@ metadata:
   labels:
     purpose: roboshop
     environment: dev
-  namespace: roboshop
+  # namespace: roboshop
 spec:
   # Specify replicas to be created
   replicas: 5
