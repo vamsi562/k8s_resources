@@ -48,7 +48,7 @@ spec:
               mountPath: /tmp
       containers:
         - name: mysql
-          image: vamsi562/mysql:v2
+          image: joindevops/mysql:v2
           imagePullPolicy: Always
           volumeMounts:
             - name: mysql-config
@@ -62,19 +62,3 @@ spec:
             name: mysql
         - name: mysql-secret
           emptyDir: {}
-
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: mysql
-  # namespace: roboshop
-spec:
-  selector:
-    purpose: roboshop
-    component: mysql
-    tier: db
-  ports:
-    - protocol: TCP
-      port: 3306 #  servicePort
-      targetPort: 3306 #  containerPort
