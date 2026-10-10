@@ -42,8 +42,7 @@ spec:
             - sh
             - c
             - |
-              RAW_SECRET=$(aws secretsmanager get-secret-value --secret-id dev/roboshop/mysqlpassword --query 'SecretString' --output text)
-              echo "$RAW_SECRET" | python3 -c "import sys, json; print(json.load(sys.stdin)['mysqlpassword'])" > /tmp/mysql-root-password.txt
+              aws secretsmanager get-secret-value --secret-id dev/roboshop/mysqlpassword --query 'SecretString' --output text | jq -r '.["mysqlpassword"]' > /tmp/mysql-root-password.txt
           volumeMounts:
             - name: mysql-secret
               mountPath: /tmp
