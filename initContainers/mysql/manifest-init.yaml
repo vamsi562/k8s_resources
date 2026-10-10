@@ -1,0 +1,80 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql
+  namespace: roboshop
+data:
+  my.cnf: |
+    [mysqld]
+    innodb_redo_log_capacity = 2G
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql
+  # these are replica set labels
+  labels:
+    purpose: roboshop
+    component: mysql
+    tier: db
+  # namespace: roboshop
+spec:
+  # Specify replicas to be created
+  replicas: 1
+  selector:
+    matchLabels:
+      purpose: roboshop
+      component: mysql
+      tier: db
+  template:
+    # pod definition
+    metadata:
+      labels:
+        purpose: roboshop
+        component: mysql
+        tier: db
+    spec:
+      serviceAccount: secret-mysql-reader
+      initContainers:
+        - name: fetch-secret
+          image: amazon/aws-cli
+          command:
+            - sh
+            - c
+            - |
+              aws secretsmanager get-secret-value --secret-id dev/roboshop/mysqlpassword --query 'SecretString' --output text | jq -r '.["mysqlpassword"]' > /tmp/mysql-root-password.txt
+          volumeMounts:
+            - name: mysql-secret
+              mountPath: /tmp
+      containers:
+        - name: mysql
+          image: vamsi562/mysql:v1
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mysql-config
+              mountPath: /etc/mysql/conf.d/my.cnf
+              subPath: my.cnf
+            - name: mysql-secret
+              mountPath: /tmp
+      volumes:
+        - name: mysql-config
+          configMap:
+            name: mysql
+        - name: mysql-secret
+          emptyDir: {}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+  namespace: roboshop
+spec:
+  selector:
+    purpose: roboshop
+    component: mysql
+    tier: db
+  ports:
+    - protocol: TCP
+      port: 3306 #  servicePort
+      targetPort: 3306 #  containerPort
