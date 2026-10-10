@@ -48,7 +48,7 @@ spec:
               mountPath: /tmp
       containers:
         - name: mysql
-          image: vamsi562/mysql:v1
+          image: vamsi562/mysql:v2
           imagePullPolicy: Always
           volumeMounts:
             - name: mysql-config
