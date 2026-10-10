@@ -40,7 +40,7 @@ spec:
           image: amazon/aws-cli
           command:
             - sh
-            - c
+            - -c
             - |
               aws secretsmanager get-secret-value --secret-id dev/roboshop/mysqlpassword --query 'SecretString' --output text | jq -r '.["mysqlpassword"]' > /tmp/mysql-root-password.txt
           volumeMounts:
