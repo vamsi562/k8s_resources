@@ -11,4 +11,3 @@ fi
 export MYSQL_ROOT_PASSWORD=$PASSWORD
 rm -rf /tmp/mysql-root-password.txt
 exec /entrypoint.sh mysqld
-# /tmp/mysql-root-password.txt -> init container places password in this file
