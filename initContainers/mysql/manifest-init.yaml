@@ -44,8 +44,8 @@ spec:
             - |
               aws secretsmanager get-secret-value --secret-id dev/roboshop/mysqlpassword --query 'SecretString' --output text | jq -r '.["mysqlpassword"]' > /tmp/mysql-root-password.txt
           volumeMounts:
-            - name: mysql-secret
-              mountPath: /tmp
+            - name: mysql-secret-volume
+              mountPath: /mysql-secret-shared
       containers:
         - name: mysql
           image: vamsi562/mysql:v2
@@ -54,11 +54,12 @@ spec:
             - name: mysql-config
               mountPath: /etc/mysql/conf.d/my.cnf
               subPath: my.cnf
-            - name: mysql-secret
-              mountPath: /tmp
+            - name: mysql-secret-volume
+              mountPath: /tmp/mysql-root-password.txt
+              subPath: mysql-root-password.txt
       volumes:
         - name: mysql-config
           configMap:
             name: mysql
-        - name: mysql-secret
+        - name: mysql-secret-volume
           emptyDir: {}
